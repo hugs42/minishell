@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 12:18:47 by hugsbord          #+#    #+#              #
-#    Updated: 2020/02/17 12:39:42 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/27 16:49:55 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ SRC =	ft_memset.c			\
 		ft_strjoin.c		\
 		ft_strtrim.c		\
 		ft_split.c			\
-		ft_itoa.c			\
 		ft_strmapi.c		\
 		ft_putchar_fd.c		\
 		ft_putstr_fd.c		\
@@ -55,7 +54,16 @@ SRC =	ft_memset.c			\
 		ft_islower.c		\
 		ft_isupper.c		\
 		ft_strrev.c			\
-		ft_putnstr_fd.c	
+		ft_putnstr_fd.c		\
+		ft_lstlast.c		\
+		ft_lstadd_back.c	\
+		ft_lstadd_front.c	\
+		ft_lstclear.c		\
+		ft_lstdelone.c		\
+		ft_lstiter.c		\
+		ft_lstmap.c			\
+		ft_lstnew.c			\
+		ft_lstsize.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -64,9 +72,8 @@ OBJ_B = $(SRC_B:.c=.o)
 all: $(NAME)
 
 $(NAME): $(HEADERS) $(OBJ)
-	@echo "Libft creation :"
 	@ar rc $(NAME) $(OBJ)
-	@echo "$(NAME) created ..."
+	@echo "\033[32m$(NAME) created ..\033[32m."
 	@ranlib $(NAME)
 	@echo "$(NAME) correctly indexed"
 
@@ -82,11 +89,11 @@ bonus : $(OBJ) $(OBJ_B)
 
 clean:
 	@rm -f $(OBJ) $(OBJ_B)
-	@echo "OBJ (.o) removed"
+	@echo "OBJ (.o) \033[31m removed\033[0m"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(NAME) removed"
+	@echo "$(NAME)\033[31m removed\033[0m"
 
 re: fclean all
 
