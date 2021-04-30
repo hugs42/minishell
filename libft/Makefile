@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 12:18:47 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/27 16:49:55 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/29 10:54:55 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,8 @@ SRC =	ft_memset.c			\
 		ft_lstiter.c		\
 		ft_lstmap.c			\
 		ft_lstnew.c			\
-		ft_lstsize.c
+		ft_lstsize.c		\
+		ft_strtok.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -73,27 +74,27 @@ all: $(NAME)
 
 $(NAME): $(HEADERS) $(OBJ)
 	@ar rc $(NAME) $(OBJ)
-	@echo "\033[32m$(NAME) created ..\033[32m."
+	@echo "\033[92m$(NAME) created ...\033[0m"
 	@ranlib $(NAME)
-	@echo "$(NAME) correctly indexed"
+	@echo "\033[92m$(NAME) correctly indexed\033[0m"
 
 bonus : $(OBJ) $(OBJ_B)
 	@echo "Bonus creation :"
-	@ar rc  $(NAME) $(OBJ) $(OBJ_B)
+	@ar rc $(NAME) $(OBJ) $(OBJ_B)
 	@echo "Done ..."
 	@ranlib $(NAME)
-	@echo "$(NAME) with bonus correctly indexed"
+	@echo "\033[92m$(NAME) with bonus correctly indexed\033[0m"
 
 %.o: %.c
 	@gcc $(FLAGS) -c $< -o $@
 
 clean:
 	@rm -f $(OBJ) $(OBJ_B)
-	@echo "OBJ (.o) \033[31m removed\033[0m"
+	@echo "\033[91mOBJ (.o) removed\033[0m"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(NAME)\033[31m removed\033[0m"
+	@echo "\033[91m$(NAME) removed\033[0m"
 
 re: fclean all
 

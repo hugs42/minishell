@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 15:37:01 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/27 16:51:19 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/29 09:23:18 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,10 @@ NAME = minishell
 
 SRCS =	./srcs/main.c \
 		./srcs/prompt_msg.c \
+		./srcs/error.c \
+		./srcs/get_next_line.c \
+		./srcs/parse_input.c \
+		./srcs/signal_handler.c
 
 INC = -I ./includes
 
@@ -30,23 +34,23 @@ OBJ = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\033[36m"
-	@echo "                             :::      ::::::::"
-	@echo "                           :+:      :+:    :+:"
-	@echo "    Project:             +:+ +:+         +:+"
-	@echo "    MINISHELL          +#+  +:+       +#+"
-	@echo "                     +#+#+#+#+#+   +#+"
-	@echo "                           #+#    #+#"
-	@echo "                          ###   ########.fr\033[0m"
+	@echo "\033[96m"
+	@echo "                            :::      ::::::::"
+	@echo "                          :+:      :+:    :+:"
+	@echo "    42_cursus:          +:+ +:+         +:+"
+	@echo "    MINISHELL         +#+  +:+       +#+"
+	@echo "                    +#+#+#+#+#+   +#+"
+	@echo "                          #+#    #+#"
+	@echo "                         ###   ########.fr\033[0m"
 	@echo "\033[0m"
-	@echo "\033[33m>> Libft compilation\033[0m"
+	@echo "\033[93m>> Libft compilation\033[0m"
 	@make -C libft
-	@echo "\033[33m>> Minishell compilation\033[0m"
+	@echo "\033[93m>> Minishell compilation\033[0m"
 	@clang $(FLAGS) $(INC) -o $(NAME) $(OBJ) $(LIBFT)
-	@echo "\033[32mMinishell correctly compilated\033[0m"
+	@echo "\033[92mMinishell correctly compilated\033[0m"
 
 clean: $(OBJ)
-	@echo "\033[33m>> Cleaning objects (.obj)\033[0m"
+	@echo "\033[93m>> Cleaning objects (.obj)\033[0m"
 	@make $@ -C libft
 	@rm -f $(OBJ)
 

@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_msg.c                                       :+:      :+:    :+:   */
+/*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/27 09:01:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/29 12:43:28 by hugsbord         ###   ########.fr       */
+/*   Created: 2021/04/29 10:45:21 by hugsbord          #+#    #+#             */
+/*   Updated: 2021/04/29 10:57:40 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "libft.h"
 
-void	ft_prompt_msg(char *input)
+char	*ft_strtok(char *str, const char *delim)
 {
-	char	buff[4096 + 1];
-	char	*cwd_tmp;
-	char	*cwd;
+	int				i;
+	static char		*stock;
 
-	cwd_tmp = getcwd(buff, 4096);
-	ft_putstr_fd(cwd_tmp, 1);
-	ft_putstr_fd(" $> ", 1);
-	ft_putstr_fd(input, 1);
+	i = 0;
+	if (str != NULL)
+		stock = str;
+	if (!(stock) || (!(*stock)))
+		return (NULL);
+	while (!(ft_strchr(delim, stock[i])))
+		i++;
+	str = stock;
+	stock = &stock[i];
+	if (!i)
+		return (ft_strtok(stock + 1, delim));
+	if (str[i])
+		stock += 1;
+	str[i] = '\0';
+	return (str);
 }

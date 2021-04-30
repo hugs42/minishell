@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_msg.c                                       :+:      :+:    :+:   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/27 09:01:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/29 12:43:28 by hugsbord         ###   ########.fr       */
+/*   Created: 2021/04/29 08:48:31 by hugsbord          #+#    #+#             */
+/*   Updated: 2021/04/29 09:57:07 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-void	ft_prompt_msg(char *input)
+int		ft_parse_input(char *input)
 {
-	char	buff[4096 + 1];
-	char	*cwd_tmp;
-	char	*cwd;
+	int		i;
+	char	**commands;
 
-	cwd_tmp = getcwd(buff, 4096);
-	ft_putstr_fd(cwd_tmp, 1);
-	ft_putstr_fd(" $> ", 1);
-	ft_putstr_fd(input, 1);
+	i = 0;
+	while (input[i] != '\0')
+	{
+		if (ft_isspace(input[i]))
+			i++;
+		else
+			commands = ft_split(input, ';');
+		i++;
+	}
+//	printf("|%s|", *commands);
+	return (0);
 }
