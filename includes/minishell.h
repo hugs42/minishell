@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 14:39:00 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 19:42:32 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ char	*ft_get_input(void);
 void	ft_free_array(char **array);
 int		ft_error(int error);
 int		ft_parse_input(char *input);
-int		ft_builtin_cd(char *cmd, char *arg);
+int		ft_builtin_cd(char *path);
 int		ft_builtin_pwd(void);
 void	ft_signal_handler(int signal);
 char	*ft_get_var(char *var);
 int		ft_get_absolute_path(t_data *data, char **cmd);
 void	ft_exec_builtin(t_data *data, char *builtin);
-int		ft_exec_cmds(char **cmd);
+int		ft_exec_cmds(char **cmd);//, char *arg);
 void	ft_free_array(char **array);
 int		ft_init_env(char **envp);
 int		ft_init_struct(t_data *data);

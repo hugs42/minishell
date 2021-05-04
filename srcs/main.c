@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 15:11:05 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 19:55:57 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int		ft_is_builtin(char *cmd)
 
 	i = 0;
 	split_cmd = ft_split(cmd, ' ');
-	char *valid_cmd[] = {"pwd", "cd", "env", "export", "unset",  "echo", "exit"};
-	while (valid_cmd[i])
+	char *builtin[] = {"pwd", "cd", "env", "export", "unset",  "echo", "exit", NULL};
+	while (builtin[i])
 	{
-		if (ft_strncmp(valid_cmd[i], split_cmd[0], ft_strlen(valid_cmd[i])) == 0)
+		if (ft_strncmp(builtin[i], split_cmd[0], ft_strlen(builtin[i])) == 0)
 		{
-			if ((ft_strlen(valid_cmd[i]) == ft_strlen(split_cmd[0])))
+			if ((ft_strlen(builtin[i]) == ft_strlen(split_cmd[0])))
 				return (SUCCESS);
 		}
 		i++;
@@ -55,12 +55,14 @@ int		ft_shell_loop(t_data *data)
 {
 	int		i;
 	char	**cmd = NULL;
+	char	**split_arg;
 
 	ft_prompt_msg(data->input);
 	while (get_next_line(0, &data->input) > 0)
 	{
 		i = 0;
 		cmd = ft_split_input(data->input);
+//		split_arg = ft_split(cmd[i], ' ');
 		if (cmd[0] == NULL)
 			cmd[0] = "\0";
 		while (cmd[i])
@@ -70,10 +72,13 @@ int		ft_shell_loop(t_data *data)
 				if (ft_is_builtin(cmd[i]) == SUCCESS)
 					ft_exec_builtin(data, cmd[i]);
 				else if (ft_get_absolute_path(data, cmd) == SUCCESS)
-					ft_exec_cmds(cmd);
+				{
+					ft_putstr_fd(cmd[0], 1);
+					ft_exec_cmds(cmd);//, split_arg[1]);
+				}
 				else
 				{
-					ft_putstr_fd("minishell: command not found: ", 1);
+					ft_putstr_fd("bash: command not found: ", 1);
 					ft_putstr_fd(cmd[i], 1);
 					ft_putchar_fd('\n', 1);
 				}
