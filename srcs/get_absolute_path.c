@@ -6,13 +6,13 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 09:53:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 09:55:39 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 10:49:56 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int		ft_get_absolute_path(char **cmd)
+int		ft_get_absolute_path(t_data *data, char **cmd)
 {
 	int			i;
 	char		*path;
@@ -21,6 +21,7 @@ int		ft_get_absolute_path(char **cmd)
 	struct		stat f;
 
 	i = 0;
+	data->is_file = 0;
 	path = ft_get_var("PATH");
 	if (path == NULL)
 		path = ft_strdup("/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin");
@@ -37,7 +38,10 @@ int		ft_get_absolute_path(char **cmd)
 			ft_strlcat(bin, "/", ft_strlen(bin) + 2);
 			ft_strlcat(bin, cmd[0], ft_strlen(bin) + ft_strlen(cmd[0]) + 1);
 			if (stat(bin, &f) == 0)
+			{
+				data->is_file = 1;
 				break;
+			}
 			free(bin);
 			bin = NULL;
 			i++;
@@ -51,5 +55,8 @@ int		ft_get_absolute_path(char **cmd)
 		free(path);
 		path = NULL;
 	}
-	return (SUCCESS);
+	if (data->is_file == 1)
+		return (SUCCESS);
+	else
+		return (0);
 }

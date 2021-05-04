@@ -6,30 +6,11 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 10:09:00 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 11:41:38 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
-
-/*void	ft_parse_env(char **envp)
-{
-	int		i;
-	int		j;
-	t_env	*new;
-	t_env	*last;
-	char	*key;
-	char	**tmp;
-
-	i = 0;
-	while (envp[i])
-	{
-		tmp = ft_split(envp[i], '=');
-		new->key = ft_strdup(tmp[0]);
-//		new->key = NULL;
-		i++;
-	}
-}*/
 
 char	*ft_get_var(char *var)
 {
@@ -48,24 +29,6 @@ char	*ft_get_var(char *var)
 		i++;
 	}
 	return (var);
-}
-
-int		ft_init_env(char **envp)
-{
-	int		i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	if (!(g_env = (char **)ft_calloc(i + 1, sizeof(char *))))
-		return (ERROR);
-	i = 0;
-	while (envp[i])
-	{
-		g_env[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	return (SUCCESS);
 }
 
 char	**ft_split_input(char *input)
@@ -105,29 +68,30 @@ int		ft_is_builtin(char *cmd)
 	return (0);
 }
 
-int		ft_shell_loop(void)
+int		ft_shell_loop(t_data *data)
 {
 	int		i;
-	char	*input = NULL;
 	char	**cmd = NULL;
 
-	ft_prompt_msg(input);
-	while (get_next_line(0, &input) > 0)
+	ft_prompt_msg(data->input);
+	while (get_next_line(0, &data->input) > 0)
 	{
 		i = 0;
-		cmd = ft_split_input(input);
+		cmd = ft_split_input(data->input);
 		if (cmd[0] == NULL)
 			cmd[0] = "\0";
 		while (cmd[i])
 		{
+
 			if (ft_is_builtin(cmd[i]) == SUCCESS)
-			{
-				printf("OK");
 				ft_exec_builtin(cmd[i]);
+			else if (ft_strncmp(cmd[i], "\0", 1) != 0)
+			{
+				if (ft_get_absolute_path(data, cmd) == SUCCESS)
+				{
+					ft_exec_cmds(cmd);
+				}
 			}
-			else if ((ft_strncmp(cmd[i], "\0", 1) != 0) &&
-			ft_get_absolute_path(cmd) == SUCCESS)
-				ft_exec_cmds(cmd);
 			else if (ft_strncmp(cmd[i], "\0", 1) != 0)
 			{
 				ft_putstr_fd("minishell: command not found: ", 1);
@@ -136,27 +100,27 @@ int		ft_shell_loop(void)
 			}
 			i++;
 		}
-//		ft_putchar_fd('\n', 1);
-//		ft_parse_input(input);
 		cmd = NULL;
-		input = NULL;
-		ft_prompt_msg(input);
-//		free_array(cmd);
+		data->input = NULL;
+		ft_prompt_msg(data->input);
+//		ft_free_array(cmd);
 	}
-	free(input);
+	free(data->input);
 	return (0);
 }
 
 int		main(int argc, char **argv, char **envp)
 {
-	int		status;
-	char	*input;
+	t_data		data;
+	int			status;
+	char		*input;
 
 	(void)argc;
 	(void)argv;
 	status = 1;
+	ft_init_struct(&data);
 	ft_init_env(envp);
-	ft_shell_loop();
+	ft_shell_loop(&data);
 /*	while (get_next_line(0, &input) > 0)
 	{
 		ft_putstr_fd(input, 1);
