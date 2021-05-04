@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/04 09:58:39 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 13:27:56 by hugsbord         ###   ########.fr       */
+/*   Created: 2021/05/04 12:21:46 by hugsbord          #+#    #+#             */
+/*   Updated: 2021/05/04 12:25:35 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-
-
-int		ft_builtin_cd(char *cmd, char *arg)
+void	ft_builtin_env(void)
 {
-	char	*old_pwd;
-	char	*pwd;
-	char	*pwd_ptr;
-	char	**path_split;
-	char	*home;
+	int		i;
 
-	home = ft_get_var("HOME");
-//	path_split = ft_split(builtin, ' ');
-	ft_putstr_fd(arg, 1);
-//	ft_update_var(path_split[1], "");
-/*	if (chdir(path_split[1]) == -1)
+	i = 0;
+	while (g_env[i])
 	{
-		ft_putstr_fd("Path_error\n", 1);
-		return (ERROR);
-	}*/
-	return (SUCCESS);
+		ft_putstr_fd(g_env[i], 1);
+		ft_putchar_fd('\n', 1);
+		i++;
+	}
 }

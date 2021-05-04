@@ -6,30 +6,11 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 11:41:38 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 13:48:18 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
-
-char	*ft_get_var(char *var)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	**tmp;
-
-	i = 0;
-	len = ft_strlen(var);
-	while (g_env[i])
-	{
-		tmp = ft_split(g_env[i], '=');
-		if (ft_strncmp(tmp[0], var, len) == 0)
-			return (tmp[1]);
-		i++;
-	}
-	return (var);
-}
 
 char	**ft_split_input(char *input)
 {
@@ -52,15 +33,17 @@ char	**ft_split_input(char *input)
 
 int		ft_is_builtin(char *cmd)
 {
-	int i;
+	int		i;
+	char	**split_cmd;
 
 	i = 0;
+	split_cmd = ft_split(cmd, ' ');
 	char *valid_cmd[] = {"pwd", "cd", "env", "ls", "echo", "exit" , NULL};
 	while (valid_cmd[i])
 	{
-		if (ft_strncmp(valid_cmd[i], cmd, ft_strlen(valid_cmd[i])) == 0)
+		if (ft_strncmp(valid_cmd[i], split_cmd[0], ft_strlen(valid_cmd[i])) == 0)
 		{
-			if ((ft_strlen(valid_cmd[i]) == ft_strlen(cmd)))
+			if ((ft_strlen(valid_cmd[i]) == ft_strlen(split_cmd[0])))
 				return (SUCCESS);
 		}
 		i++;
@@ -82,21 +65,18 @@ int		ft_shell_loop(t_data *data)
 			cmd[0] = "\0";
 		while (cmd[i])
 		{
-
-			if (ft_is_builtin(cmd[i]) == SUCCESS)
-				ft_exec_builtin(cmd[i]);
-			else if (ft_strncmp(cmd[i], "\0", 1) != 0)
-			{
-				if (ft_get_absolute_path(data, cmd) == SUCCESS)
-				{
+			 if (ft_strncmp(cmd[i], "\0", 1) != 0)
+			 {
+				if (ft_is_builtin(cmd[i]) == SUCCESS)
+					ft_exec_builtin(cmd[i]);
+				else if (ft_get_absolute_path(data, cmd) == SUCCESS)
 					ft_exec_cmds(cmd);
+				else
+				{
+					ft_putstr_fd("minishell: command not found: ", 1);
+					ft_putstr_fd(cmd[i], 1);
+					ft_putchar_fd('\n', 1);
 				}
-			}
-			else if (ft_strncmp(cmd[i], "\0", 1) != 0)
-			{
-				ft_putstr_fd("minishell: command not found: ", 1);
-				ft_putstr_fd(cmd[i], 1);
-				ft_putchar_fd('\n', 1);
 			}
 			i++;
 		}

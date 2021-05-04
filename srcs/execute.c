@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 10:05:33 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 13:34:43 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	ft_exec_builtin(char *builtin)
 {
-	if (ft_strncmp(builtin, "cd", 2) == 0)
-	{
-		ft_builtin_cd(builtin);
-	}
+	char	**split_cmd;
+
+	split_cmd = ft_split(builtin, ' ');
+	if (ft_strncmp(split_cmd[0], "cd", 2) == 0)
+		ft_builtin_cd(split_cmd[0], split_cmd[1]);
 	else if (ft_strncmp(builtin, "pwd", 3) == 0)
-	{
 		ft_builtin_pwd();
-	}
+	else if (ft_strncmp(builtin, "env", 3) == 0)
+		ft_builtin_env();
+//	else if (ft_strncmp(builtin, "echo", 3) == 0)
+		
 }
 
 int		ft_exec_cmds(char **cmd)
