@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 13:48:18 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 15:11:05 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_is_builtin(char *cmd)
 
 	i = 0;
 	split_cmd = ft_split(cmd, ' ');
-	char *valid_cmd[] = {"pwd", "cd", "env", "ls", "echo", "exit" , NULL};
+	char *valid_cmd[] = {"pwd", "cd", "env", "export", "unset",  "echo", "exit"};
 	while (valid_cmd[i])
 	{
 		if (ft_strncmp(valid_cmd[i], split_cmd[0], ft_strlen(valid_cmd[i])) == 0)
@@ -68,7 +68,7 @@ int		ft_shell_loop(t_data *data)
 			 if (ft_strncmp(cmd[i], "\0", 1) != 0)
 			 {
 				if (ft_is_builtin(cmd[i]) == SUCCESS)
-					ft_exec_builtin(cmd[i]);
+					ft_exec_builtin(data, cmd[i]);
 				else if (ft_get_absolute_path(data, cmd) == SUCCESS)
 					ft_exec_cmds(cmd);
 				else

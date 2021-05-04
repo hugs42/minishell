@@ -6,13 +6,13 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 13:34:43 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 14:38:25 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-void	ft_exec_builtin(char *builtin)
+void	ft_exec_builtin(t_data *data, char *builtin)
 {
 	char	**split_cmd;
 
@@ -23,8 +23,8 @@ void	ft_exec_builtin(char *builtin)
 		ft_builtin_pwd();
 	else if (ft_strncmp(builtin, "env", 3) == 0)
 		ft_builtin_env();
-//	else if (ft_strncmp(builtin, "echo", 3) == 0)
-		
+	else if (ft_strncmp(builtin, "exit", 3) == 0)
+		ft_builtin_exit(data);
 }
 
 int		ft_exec_cmds(char **cmd)
