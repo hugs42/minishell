@@ -6,25 +6,66 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/30 09:24:43 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/04 10:09:00 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-void		free_array(char **array)
+/*void	ft_parse_env(char **envp)
 {
-	int i;
+	int		i;
+	int		j;
+	t_env	*new;
+	t_env	*last;
+	char	*key;
+	char	**tmp;
 
 	i = 0;
-	while (array[i])
+	while (envp[i])
 	{
-		free(array[i]);
-		array[i] = NULL;
+		tmp = ft_split(envp[i], '=');
+		new->key = ft_strdup(tmp[0]);
+//		new->key = NULL;
 		i++;
 	}
-	free(array);
-	array = NULL;
+}*/
+
+char	*ft_get_var(char *var)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	**tmp;
+
+	i = 0;
+	len = ft_strlen(var);
+	while (g_env[i])
+	{
+		tmp = ft_split(g_env[i], '=');
+		if (ft_strncmp(tmp[0], var, len) == 0)
+			return (tmp[1]);
+		i++;
+	}
+	return (var);
+}
+
+int		ft_init_env(char **envp)
+{
+	int		i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	if (!(g_env = (char **)ft_calloc(i + 1, sizeof(char *))))
+		return (ERROR);
+	i = 0;
+	while (envp[i])
+	{
+		g_env[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	return (SUCCESS);
 }
 
 char	**ft_split_input(char *input)
@@ -46,40 +87,19 @@ char	**ft_split_input(char *input)
 	return (commands);
 }
 
-
-int		ft_exec(char **cmd)
-{
-	int		status;
-	pid_t	pid;
-
-	status = 0;
-	pid = 0;
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
-	}
-	else
-	{
-		if (execve(cmd[0], cmd, NULL) == -1)
-			return (-1);
-	}
-	return (SUCCESS);
-}
-
-int		ft_is_cmd(char *cmd)
+int		ft_is_builtin(char *cmd)
 {
 	int i;
 
 	i = 0;
-	char *valid_cmd[] = {"pwd", "cd", "env", "ls", NULL};
+	char *valid_cmd[] = {"pwd", "cd", "env", "ls", "echo", "exit" , NULL};
 	while (valid_cmd[i])
 	{
-		if (ft_strncmp(valid_cmd[i], cmd, ft_strlen(valid_cmd[i])))
-			return (SUCCESS);
+		if (ft_strncmp(valid_cmd[i], cmd, ft_strlen(valid_cmd[i])) == 0)
+		{
+			if ((ft_strlen(valid_cmd[i]) == ft_strlen(cmd)))
+				return (SUCCESS);
+		}
 		i++;
 	}
 	return (0);
@@ -87,23 +107,38 @@ int		ft_is_cmd(char *cmd)
 
 int		ft_shell_loop(void)
 {
-	char *input = NULL;
-	char **cmd = NULL;
+	int		i;
+	char	*input = NULL;
+	char	**cmd = NULL;
 
 	ft_prompt_msg(input);
 	while (get_next_line(0, &input) > 0)
 	{
+		i = 0;
 		cmd = ft_split_input(input);
 		if (cmd[0] == NULL)
 			cmd[0] = "\0";
-//		printf("%s\n", cmd[0]);
-		if (ft_is_cmd(cmd[0]))
+		while (cmd[i])
 		{
-			ft_exec(cmd);
-//			ft_putchar_fd(' ',1);
+			if (ft_is_builtin(cmd[i]) == SUCCESS)
+			{
+				printf("OK");
+				ft_exec_builtin(cmd[i]);
+			}
+			else if ((ft_strncmp(cmd[i], "\0", 1) != 0) &&
+			ft_get_absolute_path(cmd) == SUCCESS)
+				ft_exec_cmds(cmd);
+			else if (ft_strncmp(cmd[i], "\0", 1) != 0)
+			{
+				ft_putstr_fd("minishell: command not found: ", 1);
+				ft_putstr_fd(cmd[i], 1);
+				ft_putchar_fd('\n', 1);
+			}
+			i++;
 		}
 //		ft_putchar_fd('\n', 1);
 //		ft_parse_input(input);
+		cmd = NULL;
 		input = NULL;
 		ft_prompt_msg(input);
 //		free_array(cmd);
@@ -112,7 +147,7 @@ int		ft_shell_loop(void)
 	return (0);
 }
 
-int		main(int argc, char **argv, char **env)
+int		main(int argc, char **argv, char **envp)
 {
 	int		status;
 	char	*input;
@@ -120,6 +155,7 @@ int		main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	status = 1;
+	ft_init_env(envp);
 	ft_shell_loop();
 /*	while (get_next_line(0, &input) > 0)
 	{
