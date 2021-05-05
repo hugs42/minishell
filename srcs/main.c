@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 19:55:57 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/05 13:25:51 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,24 @@ int		ft_shell_loop(t_data *data)
 {
 	int		i;
 	char	**cmd = NULL;
-	char	**split_arg;
+	char	**split_arg = NULL;
 
 	ft_prompt_msg(data->input);
 	while (get_next_line(0, &data->input) > 0)
 	{
 		i = 0;
 		cmd = ft_split_input(data->input);
-//		split_arg = ft_split(cmd[i], ' ');
 		if (cmd[0] == NULL)
 			cmd[0] = "\0";
 		while (cmd[i])
 		{
+			split_arg = ft_split(cmd[i], ' ');
 			 if (ft_strncmp(cmd[i], "\0", 1) != 0)
 			 {
 				if (ft_is_builtin(cmd[i]) == SUCCESS)
 					ft_exec_builtin(data, cmd[i]);
-				else if (ft_get_absolute_path(data, cmd) == SUCCESS)
-				{
-					ft_putstr_fd(cmd[0], 1);
-					ft_exec_cmds(cmd);//, split_arg[1]);
-				}
+				else if (ft_get_absolute_path(data, split_arg) == SUCCESS)
+					ft_exec_cmds(split_arg);
 				else
 				{
 					ft_putstr_fd("bash: command not found: ", 1);
