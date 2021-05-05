@@ -6,61 +6,75 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 09:58:39 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 18:19:56 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/05 18:48:53 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int		ft_builtin_cd(char *path)
+void	ft_builtin_cd_err(t_data *data, char *path)
 {
-	char		*old_pwd;
+	struct stat f;
+
+	if (stat(path, &f) == -1)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else if (!(f.st_mode & S_IXUSR))
+	{
+		ft_putstr_fd("bash: cd: \n", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
+	else
+	{
+		ft_putstr_fd("bash: cd: \n", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": Not a directory\n", 2);
+	}
+}
+
+void	ft_builtin_cd_last(t_data *data, char *pwd)
+{
+	if (chdir(ft_get_var("OLDPWD")) == 0)
+	{
+		ft_update_var("PWD", pwd);
+		ft_update_var("OLDPWD", data->pwd->old_pwd);
+	}
+}
+
+void	ft_builtin_cd_home(t_data *data, char *home, char *pwd)
+{
+	if (chdir(home) < 0)
+		ft_putstr_fd("bash: cd: HOME not set\n", 1);
+	else if (chdir(home) == 0)
+	{
+		pwd = home;
+		ft_update_var("PWD", pwd);
+		ft_update_var("OLDPWD", data->pwd->old_pwd);
+	}
+}
+
+int		ft_builtin_cd(t_data *data, char *path)
+{
 	char		*pwd;
-	char		*pwd_ptr;
 	char		*home;
-	struct		stat f;
 
 	home = ft_get_var("HOME");
-	old_pwd = getcwd(NULL, 0);
-	if ((!(path)) || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1))
-	{
-		if (chdir(home) < 0)
-			ft_putstr_fd("bash: cd: HOME not set\n", 1);
-		else if (chdir(home) == 0)
-		{
-			pwd = home;
-			old_pwd = ft_get_var("OLDPWD");
-		if (pwd != NULL && old_pwd != NULL)
-			ft_strlcpy(old_pwd, pwd, ft_strlen(old_pwd) + ft_strlen(pwd));
-
-		}
-	}
-//	else if (ft_strncmp(
+	pwd = getcwd(NULL, 0);
+	if ((!(path)) || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1) ||
+	(ft_strncmp(path, "--", 2) == 0 && ft_strlen(path) == 2))
+		ft_builtin_cd_home(data, home, pwd);
+	else if (ft_strncmp(path, "-", 1) == 0 && ft_strlen(path) == 1)
+		ft_builtin_cd_last(data, pwd);
 	else if (chdir(path) == 0)
 	{
-		pwd = ft_get_var("PWD");
-		old_pwd = ft_get_var("OLDPWD");
-		if (pwd != NULL && old_pwd != NULL)
-			ft_strlcpy(old_pwd, pwd, ft_strlen(old_pwd) + ft_strlen(pwd));
+		ft_update_var("PWD", pwd);
+		ft_update_var("OLDPWD", data->pwd->old_pwd);
 	}
 	else if (chdir(path) < 0)
-	{
-		ft_putstr_fd("bash: cd: ", 1);
-		ft_putstr_fd(path, 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
-//		if (lstat(path, &f) == -1)
-			
-	}
-//	ft_putstr_fd(pwd, 1);
-
-		
-//		new_pwd = chdir(home);
-		
-//	ft_update_var(path_split[1], "");
-/*	if (chdir(path_split[1]) == -1)
-	{
-		ft_putstr_fd("Path_error\n", 1);
-		return (ERROR);
-	}*/
+		ft_builtin_cd_err(data, path);
 	return (SUCCESS);
 }

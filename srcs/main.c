@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/05 13:25:51 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/05 17:52:28 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_is_builtin(char *cmd)
 
 	i = 0;
 	split_cmd = ft_split(cmd, ' ');
-	char *builtin[] = {"pwd", "cd", "env", "export", "unset",  "echo", "exit", NULL};
+	char *builtin[] = {"pwd", "cd", "env", "export", "unset", "echo", "exit", NULL};
 	while (builtin[i])
 	{
 		if (ft_strncmp(builtin[i], split_cmd[0], ft_strlen(builtin[i])) == 0)

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 19:42:32 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/05 17:32:23 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,22 @@
 # define ERROR -1
 # define LEAVE -2
 
+typedef struct		s_pwd
+{
+	char			*pwd;
+	char			*old_pwd;
+}					t_pwd;
+
 typedef struct		s_data
 {
+	t_pwd			*pwd;
 	int				i;
 	int				is_file;
 	char			*input;
 	char			*path;
 	char			**path_split;
 	char			*bin;
+
 }					t_data;
 
 typedef struct		s_env
@@ -49,7 +57,7 @@ char	*ft_get_input(void);
 void	ft_free_array(char **array);
 int		ft_error(int error);
 int		ft_parse_input(char *input);
-int		ft_builtin_cd(char *path);
+int		ft_builtin_cd(t_data *data, char *path);
 int		ft_builtin_pwd(void);
 void	ft_signal_handler(int signal);
 char	*ft_get_var(char *var);
