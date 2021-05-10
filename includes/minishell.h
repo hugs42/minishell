@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/05 17:32:23 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/10 12:58:56 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	ft_free_array(char **array);
 int		ft_init_env(char **envp);
 int		ft_init_struct(t_data *data);
 void	ft_builtin_env(void);
+int		ft_find_var(char *var);
 void	ft_update_var(char *key, char *value);
 void	ft_builtin_exit(t_data *data);
-
+int		ft_builtin_unset(char **key);
+char	**ft_realloc_env(int var_nb);
 #endif

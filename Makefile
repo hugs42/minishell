@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 15:37:01 by hugsbord          #+#    #+#              #
-#    Updated: 2021/05/04 14:39:25 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/05/05 19:24:06 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS =	./srcs/main.c \
 		./srcs/builtin_env.c \
 		./srcs/builtin_cd.c \
 		./srcs/builtin_pwd.c \
+		./srcs/builtin_unset.c \
 		./srcs/builtin_exit.c \
 		./srcs/init.c \
 		./srcs/signal_handler.c \

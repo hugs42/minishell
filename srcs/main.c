@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/05 17:52:28 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/10 12:46:08 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**ft_split_input(char *input)
 	int		i;
 
 	i = 0;
+	commands = NULL;
+	tmp = NULL;
 	commands = ft_split(input, ';');
 	while (commands[i] != NULL)
 	{
@@ -28,6 +30,7 @@ char	**ft_split_input(char *input)
 		free(tmp);
 		i++;
 	}
+	commands[i] = NULL;
 	return (commands);
 }
 
@@ -64,7 +67,7 @@ int		ft_shell_loop(t_data *data)
 		cmd = ft_split_input(data->input);
 		if (cmd[0] == NULL)
 			cmd[0] = "\0";
-		while (cmd[i])
+		while (cmd[i] != NULL && ft_strlen(cmd[i]) != 0)
 		{
 			split_arg = ft_split(cmd[i], ' ');
 			 if (ft_strncmp(cmd[i], "\0", 1) != 0)

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 09:53:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/05 13:09:54 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/10 12:43:03 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		ft_get_absolute_path(t_data *data, char **cmd)
 	char		**cmd_split;
 
 	i = 0;
+	path_split = NULL;
+	cmd_split = NULL;
 	data->path = ft_get_var("PATH");
 	if (data->path == NULL)
 		data->path = ft_strdup("/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin");
