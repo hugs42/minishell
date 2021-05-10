@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:24:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/05 17:24:50 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:44:26 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int		ft_init_struct(t_data *data)
 int		ft_init_env(char **envp)
 {
 	int		i;
+	int		shlvl;
 
 	i = 0;
+	shlvl = 0;
 	while (envp[i])
 		i++;
 	if (!(g_env = (char **)ft_calloc(i + 1, sizeof(char *))))
@@ -47,5 +49,8 @@ int		ft_init_env(char **envp)
 		g_env[i] = ft_strdup(envp[i]);
 		i++;
 	}
+	shlvl = ft_atoi(ft_get_var("SHLVL"));
+	shlvl++;
+	ft_update_var("SHLVL", ft_itoa(shlvl));
 	return (SUCCESS);
 }

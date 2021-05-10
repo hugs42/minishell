@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 19:07:32 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/10 14:19:32 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:37:51 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 int		ft_builtin_unset(char **key)
 {
 	int i;
-	int j;
 	int var_nb;
 
 	i = 1;
-	j = 0;
 	var_nb = 0;
 	if (!(key[i]))
 		return (0);
@@ -45,7 +43,6 @@ int		ft_builtin_unset(char **key)
 				g_env[var_nb] = ft_strdup(g_env[var_nb + 1]);
 				free(g_env[var_nb + 1]);
 				var_nb++;
-				j++;
 			}
 		}
 		i++;
