@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/10 12:46:08 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:27:15 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,5 @@ int		main(int argc, char **argv, char **envp)
 	ft_init_struct(&data);
 	ft_init_env(envp);
 	ft_shell_loop(&data);
-/*	while (get_next_line(0, &input) > 0)
-	{
-		ft_putstr_fd(input, 1);
-		ft_parse_input(input);
-	}
-	free(input);
-	while (42)
-	{
-		ft_prompt_msg();
-		signal(SIGINT, ft_signal_handler);
-	}*/
 	return (0);
 }
