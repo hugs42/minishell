@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 09:53:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/10 12:43:03 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:00:52 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		ft_find_bin(t_data *data, int i, char **cmd, char **path_split)
 	if (stat(data->bin, &f) == 0)
 	{
 		data->is_file = 1;
-		return (SUCCESS);
+		return (1);
 	}
 	return (0);
 }
@@ -50,7 +50,7 @@ int		ft_get_absolute_path(t_data *data, char **cmd)
 		data->path = NULL;
 		while (path_split[i])
 		{
-			if (ft_find_bin(data, i, cmd, path_split) == SUCCESS)
+			if (ft_find_bin(data, i, cmd, path_split) == 1)
 				break ;
 			free(data->bin);
 			data->bin = NULL;
@@ -68,6 +68,6 @@ int		ft_get_absolute_path(t_data *data, char **cmd)
 		data->path = NULL;
 	}
 	if (data->is_file == 1)
-		return (SUCCESS);
+		return (1);
 	return (0);
 }

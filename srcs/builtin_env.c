@@ -6,13 +6,13 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:21:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 12:25:35 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/17 11:44:22 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-void	ft_builtin_env(void)
+int		ft_builtin_env(void)
 {
 	int		i;
 
@@ -23,4 +23,5 @@ void	ft_builtin_env(void)
 		ft_putchar_fd('\n', 1);
 		i++;
 	}
+	return (SUCCESS);
 }

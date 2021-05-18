@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:36:44 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/10 14:19:13 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/05/17 22:09:54 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ char	*ft_get_var(char *var)
 	while (g_env[i])
 	{
 		tmp = ft_split(g_env[i], '=');
-		if (ft_strncmp(tmp[0], var, len) == 0)
+		if (ft_strncmp(tmp[0], var, len) == 0 && ft_strlen(tmp[0]) == len)
 			return (tmp[1]);
 		i++;
 	}
-	return (var);
+	return (NULL);
 }
 
 void	ft_update_var(char *key, char *value)
