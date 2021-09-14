@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/17 23:16:31 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/14 10:29:01 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,15 @@
 # include <term.h>
 # include <termios.h>
 # include <sys/ioctl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define SUCCESS 0
 # define LEAVE -2
+# define ERR_TERM_DB -20
+# define ERR_TERM_TYPE -21
+
+int			g_sig;
 
 typedef struct		s_pwd
 {
@@ -95,5 +101,9 @@ void	ft_builtin_exit(t_data *data);
 int		ft_builtin_unset(char **key);
 char	**ft_realloc_env(int var_nb);
 int		ft_builtin_echo(t_data *data, char *cmd);
+int		ft_builtin_export(t_data *data, char *cmd);
+int		ft_init_termcaps(void);
+int		ft_ctrl(void);
+int		ft_errors(int error);
 
 #endif

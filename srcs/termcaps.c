@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_exit.c                                     :+:      :+:    :+:   */
+/*   termcaps.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/04 14:25:59 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/09 13:43:38 by hugsbord         ###   ########.fr       */
+/*   Created: 2021/05/18 12:28:09 by hugsbord          #+#    #+#             */
+/*   Updated: 2021/05/26 15:20:56 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-void	ft_free_all(t_data *data)
+int		ft_init_termcaps(void)
 {
-	int i;
+	int		ret;
+	char	*term_type;
 
-	i = 0;
-	if (g_env[i])
-	{
-		while (g_env[i])
-		{
-			free(g_env[i]);
-			i++;
-		}
-	}
-}
-
-void	ft_builtin_exit(t_data *data)
-{
-	
-//	ft_free_all(data);
-//	ft_putstr_fd("exit\n", 1);
-	exit(0);
+	term_type = ft_get_var("TERM");
+	if (term_type == NULL)
+		term_type = ft_strdup("xterm");
+	ret = tgetent(NULL, term_type);
+	if (ret == -1)
+		ft_errors(ERR_TERM_DB);
+	else if (ret == 0)
+		ft_errors(ERR_TERM_TYPE);
+	return (SUCCESS);
 }

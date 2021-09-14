@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/17 15:30:42 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/06/10 07:38:01 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	ft_exec_builtin(t_data *data, char *builtin)
 		ft_builtin_exit(data);
 	else if (ft_strncmp(builtin, "echo", 4) == 0)
 		data->ret = ft_builtin_echo(data, builtin);
+	else if (ft_strncmp(builtin, "export", 6) == 0)
+		data->ret = ft_builtin_export(data, builtin);
 }
 
 int		ft_exec_cmds(t_data *data, char **cmd)
