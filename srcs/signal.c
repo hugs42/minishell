@@ -6,26 +6,21 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 08:25:28 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/14 11:41:17 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/14 23:12:45 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "./../includes/minishell.h"
-#include <signal.h>
-#include <stdio.h>
-#include <readline/readline.h>	
-#include <readline/history.h>
+
 void	ft_signal_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
-//		rl_redisplay();
-//		rl_replace_line("", 0);
-
-//		rl_replace_line("", 0);
-
-//		ft_putstr_fd("\n", 1);
-//		ft_putstr_fd("Ctrl C\n",1);
+		rl_replace_line("", 0);
+		ft_putchar_fd('\n', 1);
+		rl_on_new_line();
+		rl_redisplay();
 		g_sig = 1;
 		
 	}

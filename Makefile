@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 15:37:01 by hugsbord          #+#    #+#              #
-#    Updated: 2021/09/14 11:50:56 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/09/14 22:02:22 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRCS =	./srcs/main.c \
 		./srcs/termcaps.c
 
 
-INC = -I ./includes
+INC = -I ./includes -I/usr/local/opt/readline/include
+
 
 FLAGS = -Wall -Wextra -Werror -lncurses
 
@@ -61,7 +62,7 @@ $(NAME): $(OBJ)
 	@echo "\033[93m>> Libft compilation\033[0m"
 	@make -C libft
 	@echo "\033[93m>> Minishell compilation\033[0m"
-	@clang $(FLAGS) $(INC) -o $(NAME) $(OBJ) $(LIBS)
+	@clang $(FLAGS) $(INC) $(OBJ) $(LIBS) -o $(NAME)
 	@echo "\033[92mMinishell correctly compilated\033[0m"
 
 clean: $(OBJ)

@@ -6,22 +6,23 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/14 11:53:36 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/14 23:33:43 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/stat.h>
-#include <signal.h>
-#include <term.h>
-#include <termios.h>
-#include <curses.h>
-#include "./../libft/libft.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <sys/stat.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <term.h>
+# include <termios.h>
+# include <curses.h>
+# include "./../libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
@@ -78,6 +79,7 @@ typedef struct		s_env
 char				**g_env;
 
 void	ft_prompt_msg(t_data *data, char *input);
+char	*ft_prompt_msg2(t_data *data);
 char	*ft_get_input(void);
 void	ft_free_array(char **array);
 int		ft_error(int error);
@@ -103,5 +105,6 @@ int		ft_builtin_export(t_data *data, char *cmd);
 int		ft_init_termcaps(void);
 int		ft_ctrl(void);
 int		ft_errors(int error);
+void	rl_replace_line(const char *s, int n);
 
 #endif

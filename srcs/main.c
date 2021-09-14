@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/14 11:51:20 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 00:58:08 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,13 @@ int		ft_shell_loop(t_data *data, char *argv)
 	int		i;
 	char	**cmd = NULL;
 	char	**split_arg = NULL;
+	char	*str;
 
-	ft_prompt_msg(data, data->input);
+	str = ft_prompt_msg2(data);
 	while (42)
 	{
-		data->input = readline("");
+		str = ft_prompt_msg2(data);
+		data->input = readline(str);
 		i = 0;
 		data->old_ret = data->ret;
 		data->ret = 0;
@@ -133,7 +135,7 @@ int		ft_shell_loop(t_data *data, char *argv)
 		}
 		cmd = NULL;
 		data->input = NULL;
-		ft_prompt_msg(data, data->input);
+//		ft_prompt_msg(data, data->input);
 //		ft_free_array(cmd);
 	}
 	free(data->input);
