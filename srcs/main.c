@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/14 11:06:46 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:51:20 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,9 @@ int		ft_shell_loop(t_data *data, char *argv)
 	char	**split_arg = NULL;
 
 	ft_prompt_msg(data, data->input);
-	if (g_sig == 1)
+	while (42)
 	{
-		ft_putstr_fd("OKKK", 1);
-//		ft_prompt_msg(data, data->input);
-		g_sig = 0;
-	}
-	while (get_next_line(0, &data->input) > 0)
-	{
+		data->input = readline("");
 		i = 0;
 		data->old_ret = data->ret;
 		data->ret = 0;
@@ -119,24 +114,10 @@ int		ft_shell_loop(t_data *data, char *argv)
 			cmd[0] = "\0";
 		while (cmd[i] != NULL && ft_strlen(cmd[i]) != 0)
 		{
-			if (g_sig == 1)
-			{
-//			ft_putstr_fd("\n", 1);
-//			break;
-//			ft_prompt_msg(data, data->input);
-//			g_sig = 0;
-			}
 			split_arg = ft_split(cmd[i], ' ');
 			 if (ft_strncmp(cmd[i], "\0", 1) != 0)
 			 {
-				if (g_sig == 1)
-				{
-					ft_putstr_fd("\n", 1);
-					ft_prompt_msg(data, data->input);
-					g_sig = 0;
-					break;
-				}
-				else if (ft_is_builtin(cmd[i]) == 1)
+				if (ft_is_builtin(cmd[i]) == 1)
 					ft_exec_builtin(data, cmd[i]);
 				else if (ft_get_absolute_path(data, split_arg) == 1)
 					ft_exec_cmds(data, split_arg);
@@ -170,6 +151,7 @@ int		main(int argc, char **argv, char **envp)
 	status = 1;
 	g_sig = 0;
 	signal(SIGINT, ft_signal_handler);
+	signal(SIGQUIT, ft_signal_handler);
 	ft_init_struct(&data);
 	ft_init_env(envp);
 	ft_init_termcaps();

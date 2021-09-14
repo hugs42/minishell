@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/14 10:29:01 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:53:36 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@
 #include <termios.h>
 #include <curses.h>
 #include "./../libft/libft.h"
-#include "./get_next_line.h"
-
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
@@ -43,6 +40,7 @@
 # include <readline/history.h>
 
 # define SUCCESS 0
+# define ERROR -1
 # define LEAVE -2
 # define ERR_TERM_DB -20
 # define ERR_TERM_TYPE -21

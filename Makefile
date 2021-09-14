@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 15:37:01 by hugsbord          #+#    #+#              #
-#    Updated: 2021/09/14 09:05:10 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/09/14 11:50:56 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ NAME = minishell
 SRCS =	./srcs/main.c \
 		./srcs/prompt_msg.c \
 		./srcs/error.c \
-		./srcs/get_next_line.c \
 		./srcs/parse_input.c \
 		./srcs/get_absolute_path.c \
 		./srcs/env_var.c \
@@ -38,7 +37,9 @@ INC = -I ./includes
 FLAGS = -Wall -Wextra -Werror -lncurses
 
 LIB_DIR = -L ./libft
-LIBFT = ./libft/libft.a
+LIBS = ./libft/libft.a $(READLINE) $(TERMCAPS)
+READLINE = -lreadline -L/usr/local/opt/readline/lib
+TERMCAPS = -ltermcap
 
 OBJ = $(SRCS:.c=.o)
 
@@ -60,7 +61,7 @@ $(NAME): $(OBJ)
 	@echo "\033[93m>> Libft compilation\033[0m"
 	@make -C libft
 	@echo "\033[93m>> Minishell compilation\033[0m"
-	@clang $(FLAGS) $(INC) -o $(NAME) $(OBJ) $(LIBFT)
+	@clang $(FLAGS) $(INC) -o $(NAME) $(OBJ) $(LIBS)
 	@echo "\033[92mMinishell correctly compilated\033[0m"
 
 clean: $(OBJ)
