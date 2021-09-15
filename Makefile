@@ -6,14 +6,13 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 15:37:01 by hugsbord          #+#    #+#              #
-#    Updated: 2021/09/15 14:15:21 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/09/15 14:35:58 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS =	./srcs/main.c \
-		./srcs/prompt_msg.c \
 		./srcs/error.c \
 		./srcs/parse_input.c \
 		./srcs/get_absolute_path.c \

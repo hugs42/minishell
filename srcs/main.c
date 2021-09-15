@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 14:15:56 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:39:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ int	ft_shell_loop(t_data *data, char *argv)
 	char	*str;
 
 	ft_ctrl();
-	str = ft_prompt_msg(data);
 	while (42)
 	{
 		i = 0;
-		str = ft_prompt_msg(data);
-		data->input = readline(str);
+		data->input = readline("minishell-42$ ");
 		data->old_ret = data->ret;
 		data->ret = 0;
 		if (ft_strlen(data->input) != 0)

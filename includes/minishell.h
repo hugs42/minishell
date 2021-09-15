@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 14:13:08 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:39:07 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct		s_env
 
 char				**g_env;
 
-char	*ft_prompt_msg(t_data *data);
 char	*ft_get_input(void);
 void	ft_free_array(char **array);
 int		ft_error(int error);
