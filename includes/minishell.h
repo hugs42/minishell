@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/14 23:33:43 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:42:39 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@ int		ft_builtin_pwd(void);
 void	ft_signal_handler(int signal);
 char	*ft_get_var(char *var);
 int		ft_get_absolute_path(t_data *data, char **cmd);
+int		ft_is_builtin(char *cmd);
+char	**ft_split_input(char *input);
+
+int		ft_execute(t_data *data, char **cmd, char **split_arg, int i);
 void	ft_exec_builtin(t_data *data, char *builtin);
 int		ft_exec_cmds(t_data *data, char **cmd);
 void	ft_free_array(char **array);
@@ -106,5 +110,5 @@ int		ft_init_termcaps(void);
 int		ft_ctrl(void);
 int		ft_errors(int error);
 void	rl_replace_line(const char *s, int n);
-
+char	*ft_lowercase(char *cmd);
 #endif

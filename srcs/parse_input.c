@@ -6,11 +6,78 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 08:48:31 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/29 09:57:07 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:42:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
+
+char	**ft_split_input(char *input)
+{
+	char	**commands;
+	char	*tmp;
+	int		i;
+	int		j;
+	int		quotes;
+
+	i = 0;
+	j = 0;
+	quotes = 0;
+	commands = NULL;
+	tmp = NULL;
+	commands = ft_split(input, ';');
+	while (commands[i] != NULL)
+	{
+		if (ft_strchr(commands[i], '\"'))
+		{
+			while (commands[i][j] != '\0')
+			{
+				if (commands[i][j] == '\"')
+					quotes++;
+				j++;
+			}
+		}
+		i++;
+	}
+	if (quotes % 2 == 1)
+	{
+		ft_putstr_fd("minishell: unexpected EOf while looking for matching quotes\n", 2);
+		return (NULL);
+	}
+	else
+		ft_strtrim(commands[i], "\n");
+	i = 0;
+	while (commands[i] != NULL)
+	{
+		tmp = ft_strtrim(commands[i], " ");
+		free(commands[i]);
+		commands[i] = ft_strdup(tmp);
+		free(tmp);
+		i++;
+	}
+	commands[i] = NULL;
+	return (commands);
+}
+
+int		ft_is_builtin(char *cmd)
+{
+	int		i;
+	char	**split_cmd;
+
+	i = 0;
+	split_cmd = ft_split(cmd, ' ');
+	char *builtin[] = {"pwd", "cd", "env", "export", "unset", "echo", "exit", NULL};
+	while (builtin[i])
+	{
+		if (ft_strncmp(builtin[i], split_cmd[0], ft_strlen(builtin[i])) == 0)
+		{
+			if ((ft_strlen(builtin[i]) == ft_strlen(split_cmd[0])))
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int		ft_parse_input(char *input)
 {

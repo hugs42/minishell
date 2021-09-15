@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 08:25:28 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/14 23:12:45 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:38:38 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 
 void	ft_signal_handler(int signal)
 {
-	if (signal == SIGINT)
+	if (signal == SIGINT && g_sig == 0)
 	{
 		rl_replace_line("", 0);
 		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
 		rl_redisplay();
-		g_sig = 1;
-		
 	}
 	else if (signal == SIGQUIT)
 	{

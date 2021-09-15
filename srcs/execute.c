@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/06/10 07:38:01 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:29:54 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,23 @@ int		ft_exec_cmds(t_data *data, char **cmd)
 	}
 	data->ret = exit_status;
 	return (SUCCESS);
+}
+
+int		ft_execute(t_data *data, char **cmd, char **split_arg, int i)
+{
+	 if (ft_strncmp(cmd[i], "\0", 1) != 0)
+	 {
+		if (ft_is_builtin(cmd[i]) == 1)
+			ft_exec_builtin(data, cmd[i]);
+		else if (ft_get_absolute_path(data, split_arg) == 1)
+			ft_exec_cmds(data, split_arg);
+		else
+		{
+			ft_putstr_fd("minishell: command not found: ", 2);
+			ft_putstr_fd(cmd[i], 2);
+			ft_putchar_fd('\n', 2);
+			data->ret = (127);
+		}
+	}
+	return (0);
 }

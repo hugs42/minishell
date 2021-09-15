@@ -6,15 +6,28 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:07:07 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/04 10:07:41 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:40:26 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-void		ft_free_array(char **array)
+char	*ft_lowercase(char *cmd)
 {
-	int i;
+	int		i;
+
+	i = 0;
+	while (cmd[i] != '\0')
+	{
+		ft_tolower(cmd[i]);
+		i++;
+	}
+	return (cmd);
+}
+
+void	ft_free_array(char **array)
+{
+	int		i;
 
 	i = 0;
 	while (array[i])
