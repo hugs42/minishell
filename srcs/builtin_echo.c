@@ -6,13 +6,13 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 14:25:32 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/05/17 19:20:53 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:05:33 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int		ft_strjoin_quotes(char **cmd, int open_br, int close_br)
+/*int		ft_strjoin_quotes(char **cmd, int open_br, int close_br)
 {
 	ft_putstr_fd("§§", 1);
 	cmd[open_br] = ft_strtrim(cmd[open_br], "\"");
@@ -89,7 +89,7 @@ int		ft_is_dollar(t_data *data, char **cmd, int i, int j)
 		cmd[i] = ft_substr(cmd[i], 0, j);
 //		ft_putstr_fd("|", 1);
 //		ft_putstr_fd(tmp, 1);
-//		ft_putstr_fd("|", 1);
+//		ft_putstr_f("|", 1);
 		if (ft_find_var(tmp) != -1)
 		{
 			cmd[i] = ft_strjoin(cmd[i], ft_get_var(tmp));
@@ -98,6 +98,7 @@ int		ft_is_dollar(t_data *data, char **cmd, int i, int j)
 	}
 	return (0);
 }
+*/
 
 int		ft_builtin_echo(t_data *data, char *builtin)
 {
@@ -111,45 +112,20 @@ int		ft_builtin_echo(t_data *data, char *builtin)
 	j = 0;
 	br = 0;
 	count = 1;
-	while (builtin[j] != '\0')
-	{
-		if (builtin[j] == '\"' || builtin[j] == '\'')
-			br++;
-		j++;
-	}
-	if (br == 0)
-		cmd = ft_split(builtin, ' ');
+	cmd = ft_split(builtin, ' ');
 	while (cmd[count])
 		count++;
-//	ft_putstr_fd("$$",1);
-//	ft_putstr_fd(cmd[2],1);
-//	ft_putstr_fd("$$\n",1);
-	if (ft_strncmp(cmd[1], "-n", 2) == 0 && ft_strlen(cmd[1]) == 2)
+	if (cmd[1])
 	{
-		data->echo_n = 1;
-		count--;
-		i++;
+		if (ft_strncmp(cmd[1], "-n", 2) == 0 && ft_strlen(cmd[1]) == 2)
+		{
+			data->echo_n = 1;
+			count--;
+			i++;
+		}
 	}
-	if (ft_is_quotes(cmd) == ERROR)
-		return (ERROR);
 	while (cmd[i] != NULL)
 	{
-		if (ft_strncmp(cmd[i], "#", 1) == 0)
-			break ;
-		j = 0;
-		while (cmd[i][j] != '\0')
-		{
-			if (cmd[i][j] == '$')
-			{
-				ft_is_dollar(data, cmd, i, j);
-			}
-			j++;
-		}
-//		if (ft_strncmp(cmd[i], "$?", 2) == 0)
-//		{
-//			ft_putnbr_fd(data->old_ret, 1);
-//			ft_substr(cmd[i], 0, 2);
-//		}
 		ft_putstr_fd(cmd[i], 1);
 		if (count > 2 && cmd[i + 1] != NULL)
 			ft_putchar_fd(' ', 1);

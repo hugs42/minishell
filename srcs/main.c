@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 12:27:11 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:15:56 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	ft_shell_loop(t_data *data, char *argv)
 	char	*str;
 
 	ft_ctrl();
-	str = ft_prompt_msg2(data);
+	str = ft_prompt_msg(data);
 	while (42)
 	{
 		i = 0;
-		str = ft_prompt_msg2(data);
+		str = ft_prompt_msg(data);
 		data->input = readline(str);
 		data->old_ret = data->ret;
 		data->ret = 0;
@@ -56,13 +56,16 @@ int	main(int argc, char **argv, char **envp)
 	int			status;
 	char		*input;
 
-	(void)argc;
-	(void)argv;
+//	(void)argc;
+//	(void)argv;
 	status = 1;
 //	ft_ctrl();
-	ft_init_struct(&data);
-	ft_init_env(envp);
-	ft_init_termcaps();
-	ft_shell_loop(&data, argv[2]);
+//	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+//	{
+		ft_init_struct(&data);
+		ft_init_env(envp);
+//		ft_init_termcaps();
+		ft_shell_loop(&data, argv[2]);
+//	}
 	return (0);
 }

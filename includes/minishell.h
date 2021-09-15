@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 12:32:33 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:13:08 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include <termios.h>
 # include <curses.h>
 # include "./../libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
@@ -34,8 +32,6 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
-# include <term.h>
-# include <termios.h>
 # include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -78,8 +74,7 @@ typedef struct		s_env
 
 char				**g_env;
 
-void	ft_prompt_msg(t_data *data, char *input);
-char	*ft_prompt_msg2(t_data *data);
+char	*ft_prompt_msg(t_data *data);
 char	*ft_get_input(void);
 void	ft_free_array(char **array);
 int		ft_error(int error);
