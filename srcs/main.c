@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 10:46:11 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 12:27:11 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,21 @@ int	ft_shell_loop(t_data *data, char *argv)
 	char	**split_arg = NULL;
 	char	*str;
 
+	ft_ctrl();
 	str = ft_prompt_msg2(data);
 	while (42)
 	{
+		i = 0;
 		str = ft_prompt_msg2(data);
 		data->input = readline(str);
-		i = 0;
 		data->old_ret = data->ret;
 		data->ret = 0;
+		if (ft_strlen(data->input) != 0)
+			add_history(data->input);
 		cmd = ft_split_input(data->input);
-		if (cmd[0] != NULL)
+		if (cmd[0] != NULL && data->input != 0)
 			cmd[0] = ft_lowercase(cmd[0]);
-		if (cmd[0] == NULL)
+		else if (cmd[0] == NULL)
 			cmd[0] = "\0";
 		while (cmd[i] != NULL && ft_strlen(cmd[i]) != 0)
 		{
@@ -56,8 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	status = 1;
-	signal(SIGINT, ft_signal_handler);
-	signal(SIGQUIT, ft_signal_handler);
+//	ft_ctrl();
 	ft_init_struct(&data);
 	ft_init_env(envp);
 	ft_init_termcaps();

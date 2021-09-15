@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 14:25:59 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/09 13:43:38 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 12:07:01 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	ft_builtin_exit(t_data *data)
 {
 	
 //	ft_free_all(data);
-//	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("exit\n", 1);
 	exit(0);
 }

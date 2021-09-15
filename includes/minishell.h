@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 10:42:39 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 12:32:33 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ int		ft_init_termcaps(void);
 int		ft_ctrl(void);
 int		ft_errors(int error);
 void	rl_replace_line(const char *s, int n);
+void	rl_clear_history(void);
 char	*ft_lowercase(char *cmd);
 #endif

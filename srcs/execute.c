@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 10:29:54 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/15 12:37:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ int		ft_execute(t_data *data, char **cmd, char **split_arg, int i)
 			ft_exec_builtin(data, cmd[i]);
 		else if (ft_get_absolute_path(data, split_arg) == 1)
 			ft_exec_cmds(data, split_arg);
+		else if ((ft_strncmp(cmd[i], "history -c", 10) == 0)
+			&& (ft_strlen(cmd[i]) == 10))
+			rl_clear_history();
 		else
 		{
 			ft_putstr_fd("minishell: command not found: ", 2);
