@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 14:39:07 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/16 18:04:54 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct		s_data
 	char			*path;
 	char			**path_split;
 	char			*bin;
+	int				quote;
+	int				dquote;
 
 }					t_data;
 
@@ -84,7 +86,7 @@ void	ft_signal_handler(int signal);
 char	*ft_get_var(char *var);
 int		ft_get_absolute_path(t_data *data, char **cmd);
 int		ft_is_builtin(char *cmd);
-char	**ft_split_input(char *input);
+char	**ft_split_input(t_data *data, char *input);
 
 int		ft_execute(t_data *data, char **cmd, char **split_arg, int i);
 void	ft_exec_builtin(t_data *data, char *builtin);

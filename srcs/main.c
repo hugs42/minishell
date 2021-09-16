@@ -6,13 +6,21 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 14:39:49 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/16 18:02:41 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
 int		g_sig;
+
+int	ft_check_lexical(t_data *data)
+{
+
+
+
+	return (0);
+}
 
 int	ft_shell_loop(t_data *data, char *argv)
 {
@@ -25,12 +33,14 @@ int	ft_shell_loop(t_data *data, char *argv)
 	while (42)
 	{
 		i = 0;
-		data->input = readline("minishell-42$ ");
+		data->input = readline("minishell-42$> ");
 		data->old_ret = data->ret;
 		data->ret = 0;
 		if (ft_strlen(data->input) != 0)
 			add_history(data->input);
-		cmd = ft_split_input(data->input);
+		cmd = ft_split_input(data, data->input);
+		if (cmd == NULL)
+			ft_shell_loop(data, argv);
 		if (cmd[0] != NULL && data->input != 0)
 			cmd[0] = ft_lowercase(cmd[0]);
 		else if (cmd[0] == NULL)
