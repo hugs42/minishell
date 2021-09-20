@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/16 18:02:41 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/20 18:22:43 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,14 @@ int	ft_shell_loop(t_data *data, char *argv)
 			cmd[0] = ft_lowercase(cmd[0]);
 		else if (cmd[0] == NULL)
 			cmd[0] = "\0";
+		ft_strtrim(cmd[0], "\'");
 		while (cmd[i] != NULL && ft_strlen(cmd[i]) != 0)
 		{
 			split_arg = ft_split(cmd[i], ' ');
+//			ft_strtrim(split_arg[0], "\'");
+//			ft_putstr_fd("@",1);
+//			ft_putstr_fd(split_arg[0], 1);
+//			ft_putstr_fd("\n",1);
 			ft_execute(data, cmd, split_arg, i);
 			i++;
 		}

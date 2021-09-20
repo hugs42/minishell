@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/16 18:04:54 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/20 11:50:15 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,19 @@ typedef struct		s_data
 	char			**path_split;
 	char			*bin;
 	int				quote;
-	int				dquote;
-
+	int				in_quote;
+	int				start;
+	int				end;
 }					t_data;
+
+typedef struct		s_token
+{
+	int				start;
+	int				end;
+	char			*cmd;
+	int				type;
+	struct s_token	*next;
+}					t_token;
 
 typedef struct		s_env
 {

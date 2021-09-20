@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:24:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/16 18:04:36 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/20 11:52:14 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int		ft_init_struct(t_data *data)
 	data->path_split = NULL;
 	data->bin = NULL;
 	data->quote = 0;
-	data->dquote = 0;
+	data->in_quote = 0;
+	data->start = 0;
+	data->end = 0;
 	return (SUCCESS);
 }
 

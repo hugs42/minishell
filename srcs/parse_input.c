@@ -6,59 +6,68 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 08:48:31 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/16 18:03:33 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/20 18:18:35 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int		ft_check_quotes(char **commands, int open, int j)
-{
-	int		i;
-	int		quotes;
-
-	i = 0;
-	quotes = 0;
-	while (commands[i] != NULL)
-	{
-		if (ft_strchr(commands[i], '\''))
-		{
-			while (commands[i][j] != '\0')
-			{
-				if (commands[i][j] == '\'')
-					quotes++;
-				j++;
-			}
-		}
-		i++;
-	}
-	return (0);
-}
-
-int		ft_check_dquotes(t_data *data, char **commands, int open, int j)
+int		ft_check_quotes(t_data *data, char *input)
 {
 	int i;
-	int dquotes;
+	int	q;
+	int start;
+	int end;
 
 	i = 0;
-	dquotes = 0;
-	open = 1;
-	while (commands[i] != NULL)
+	q = 0;
+	start = 0;
+	data->start = 0;
+	data->end = 0;
+	while (input[i] != '\0')
 	{
-		if (ft_strchr(commands[i], '\"'))
+		if (input[i] == '\'' || input[i] == '\"')
 		{
-			while (commands[i][j] != '\0')
+			if (input[i] == '\'')
 			{
-				if (commands[i][j] == '\"')
-					dquotes++;
-				j++;
+				q++;
+				data->in_quote = 1;
+				i++;
+				while (input[i] != '\'' && input[i] != '\0')
+					i++;
+				if (input[i] == '\'')
+				{
+					data->end = i;
+					q++;
+					data->in_quote = 0;
+				}
+			}
+			else if (input[i] == '\"')
+			{
+				q++;
+				i++;
+				data->in_quote = 1;
+				while (input[i] != '\"' && input[i] != '\0')
+					i++;
+				if (input[i] == '\"')
+				{
+						q++;
+						data->in_quote = 0;
+				}
 			}
 		}
 		i++;
 	}
-	return (0);
+//	ft_putstr_fd("|",1);
+//	ft_putnbr_fd(q, 1);
+//	ft_putstr_fd("|",1);
+	if (q % 2 == 1)
+	{
+		ft_putstr_fd("minishell: unexpected EOF while looking for matching quotes\n", 2);
+		return (-1);
+	}
+	return (i);
 }
-
 
 char	**ft_split_input(t_data *data, char *input)
 {
@@ -77,8 +86,9 @@ char	**ft_split_input(t_data *data, char *input)
 	tmp = NULL;
 	commands = ft_split(input, '\n');
 	open = 0;
-	j = ft_check_quotes(commands, open, j);
-	j = ft_check_dquotes(data,commands, open, j);
+	if (ft_check_quotes(data, input) == -1)
+		return (NULL);
+	
 //	commands = ft_split(input, ';');
 /*	while (commands[i] != NULL)
 	{
@@ -93,19 +103,23 @@ char	**ft_split_input(t_data *data, char *input)
 		}
 		i++;
 	}*/
-	if (data->quote % 2 == 1)
-	{
-		ft_putstr_fd("minishell: unexpected EOf while looking for matching quotes\n", 2);
-		return (NULL);
-	}
-	else
-		ft_strtrim(commands[i], "\n");
+//	if (data->quote % 2 == 1)
+//	{
+//		ft_putstr_fd("minishell: unexpected EOf while looking for matching quotes\n", 2);
+//		return (NULL);
+//	}
+//	else
+	ft_strtrim(commands[i], ";");
 	i = 0;
 	while (commands[i] != NULL)
 	{
+//		tmp = ft_strtrim(commands[i], "\"");
 		tmp = ft_strtrim(commands[i], " ");
 		free(commands[i]);
 		commands[i] = ft_strdup(tmp);
+//		ft_putstr_fd("#",1);
+//		ft_putstr_fd(commands[i],1);
+//		ft_putstr_fd("\n",1);
 		free(tmp);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/15 12:37:49 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/20 18:32:10 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ int		ft_execute(t_data *data, char **cmd, char **split_arg, int i)
 {
 	 if (ft_strncmp(cmd[i], "\0", 1) != 0)
 	 {
+		split_arg[0] = ft_strtrim(split_arg[0], "\"");
+		split_arg[0] = ft_strtrim(split_arg[0], "\'");
+//		ft_putstr_fd(split_arg[0], 1);
 		if (ft_is_builtin(cmd[i]) == 1)
 			ft_exec_builtin(data, cmd[i]);
 		else if (ft_get_absolute_path(data, split_arg) == 1)
