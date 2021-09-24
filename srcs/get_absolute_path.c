@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 09:53:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/24 17:21:29 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/24 20:15:14 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ int		ft_get_absolute_path(t_data *data, char **cmd)
 	int			i;
 	char		**path_split;
 	char		**cmd_split;
+	char		**cmd_tmp;
 
 	i = 0;
 	path_split = NULL;
 	cmd_split = NULL;
+	cmd_tmp = NULL;
 	data->path = ft_get_var("PATH");
 	int j = 0;
 	int k = 0;
@@ -57,12 +59,16 @@ int		ft_get_absolute_path(t_data *data, char **cmd)
 		data->cmd = ft_split_refill(cmd[0], '\"');
 //		data->cmd[1] = ft_strtrim(cmd[1], " ");
 //		data->cmd = ft_split(cmd[0], ' ');
-		ft_putstr_fd("*l*", 1);
+//		ft_putstr_fd("*l*", 1);
 		while (data->cmd[l])
 		{
 			data->cmd[l] = ft_strtrim(data->cmd[l], " ");
-//			ft_putstr_fd(data->cmd[l], 1);
-//			ft_putstr_fd("\n", 1);
+			data->cmd[l] = ft_strtrim(data->cmd[l], "\"");
+//			if (ft_strchr(data->cmd[l], ' ') && ft_strchr(data->cmd[l], '-'))
+//				cmd_tmp = ft_split(cmd[l], ' ');
+			ft_putstr_fd("XX", 1);
+			ft_putstr_fd(cmd_tmp[l], 1);
+			ft_putstr_fd("\n", 1);
 			l++;
 		}
 //		data->cmd[0] = ft_strtrim(cmd[0], " ");

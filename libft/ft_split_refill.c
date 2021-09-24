@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:59:36 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/24 19:10:59 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/24 19:43:52 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ char			**ft_remove_empty(char **tab)
 	i = 0;
 	space = 0;
 	tmp = 0;
-	int z = 0;
 	while(tab[len])
 		len++;
 	while (tab[i])
@@ -108,12 +107,14 @@ char			**ft_remove_empty(char **tab)
 		while (tab[i][j])
 		{
 			if (tab[i][j] == ' ' || tab[i][j] == '\"')
+			{
 				space++;
+			}
 			j++;
 		}
 		if (space == j)
 		{
-//			ft_putstr_fd("JACK",1);
+			ft_putstr_fd("JACK",1);
 			len--;
 			tmp = i;
 			free(tab[tmp]);
@@ -141,7 +142,6 @@ char			**ft_remove_empty(char **tab)
 	return (tab);
 }
 
-
 char			**ft_split_refill(char const *s, char c)
 {
 	char	**tab;
@@ -155,13 +155,13 @@ char			**ft_split_refill(char const *s, char c)
 	ft_bzero(tab, (ft_nb_words_2(s, c) + 1));
 	tab = ft_add_2(s, c, tab);
 	tab = ft_remove_empty(tab);
-//	int i = 0;
-//	while (tab[i])
-//	{
-///		ft_putstr_fd("+++", 1);
+	int i = 0;
+	while (tab[i])
+	{
+//		ft_putstr_fd("+++", 1);
 //		ft_putstr_fd(tab[i], 1);
 //		ft_putstr_fd("\n", 1);
-//		i++;
-//	}
+		i++;
+	}
 	return (tab);
 }

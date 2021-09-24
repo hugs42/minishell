@@ -4,9 +4,10 @@ int		main(void)
 {
 	int i = 0;
 	char **new = NULL;
-	char *str = "\"ls\" \" ee\"-la \" \"   \"funk\"";
+	char *str = "\"ls\" \"-l\"\"-a\" \"  \"   \"-s\"";
+	char *str2 = "ls    \"-la\"";
 
-	new = ft_split_refill(str, '\"');
+	new = ft_split_refill(str2, '\"');
 	while (new[i])
 	{
 		ft_putstr_fd(new[i], 1);

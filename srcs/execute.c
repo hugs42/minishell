@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/23 10:44:46 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/24 19:53:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ int		ft_execute(t_data *data, char **cmd, char **split_arg, int i)
 {
 	 if (ft_strncmp(cmd[i], "\0", 1) != 0)
 	 {
-		cmd[0] = ft_strtrim(cmd[0], "\"");
-		cmd[0] = ft_strtrim(cmd[0], "\'");
+//		cmd[0] = ft_strtrim(cmd[0], "\"");
+//		cmd[0] = ft_strtrim(cmd[0], "\'");
 //		ft_putstr_fd("%", 1);
 //		ft_putstr_fd(cmd[0], 1);
 //		ft_putstr_fd("%", 1);
