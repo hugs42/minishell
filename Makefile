@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 15:37:01 by hugsbord          #+#    #+#              #
-#    Updated: 2021/09/15 14:35:58 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/09/21 15:55:03 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS =	./srcs/main.c \
 		./srcs/minishell_utils.c \
 		./srcs/builtin_echo.c \
 		./srcs/builtin_export.c \
-		./srcs/signal.c
+		./srcs/signal.c \
 
 INC = -I ./includes -I/usr/local/opt/readline/include
 

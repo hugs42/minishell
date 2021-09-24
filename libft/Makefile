@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 12:18:47 by hugsbord          #+#    #+#              #
-#    Updated: 2021/05/10 14:25:31 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/09/23 11:01:36 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,8 @@ SRC =	ft_memset.c			\
 		ft_lstnew.c			\
 		ft_lstsize.c		\
 		ft_strtok.c			\
-		ft_itoa.c
+		ft_itoa.c			\
+		ft_split_refill.c
 
 OBJ = $(SRC:.c=.o)
 

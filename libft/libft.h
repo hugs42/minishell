@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 20:49:56 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/29 10:55:45 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:00:59 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ int					ft_lstsize(t_list *lst);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)
 (void *));
 char				*ft_strtok(char *str, const char *delim);
+char			**ft_split_refill(char const *s, char c);
 #endif

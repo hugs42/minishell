@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 08:48:31 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/20 18:18:35 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/23 10:21:08 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ int		ft_check_quotes(t_data *data, char *input)
 	start = 0;
 	data->start = 0;
 	data->end = 0;
+	data->is_q = 0;
 	while (input[i] != '\0')
 	{
 		if (input[i] == '\'' || input[i] == '\"')
 		{
+			data->is_q = 1;
 			if (input[i] == '\'')
 			{
 				q++;
@@ -88,38 +90,18 @@ char	**ft_split_input(t_data *data, char *input)
 	open = 0;
 	if (ft_check_quotes(data, input) == -1)
 		return (NULL);
-	
 //	commands = ft_split(input, ';');
-/*	while (commands[i] != NULL)
-	{
-		if (ft_strchr(commands[i], '\"'))
-		{
-			while (commands[i][j] != '\0')
-			{
-				if (commands[i][j] == '\"')
-					quotes++;
-				j++;
-			}
-		}
-		i++;
-	}*/
-//	if (data->quote % 2 == 1)
-//	{
-//		ft_putstr_fd("minishell: unexpected EOf while looking for matching quotes\n", 2);
-//		return (NULL);
-//	}
-//	else
 	ft_strtrim(commands[i], ";");
 	i = 0;
 	while (commands[i] != NULL)
 	{
 //		tmp = ft_strtrim(commands[i], "\"");
-		tmp = ft_strtrim(commands[i], " ");
+		tmp = ft_strtrim(commands[i], "+");
 		free(commands[i]);
 		commands[i] = ft_strdup(tmp);
-//		ft_putstr_fd("#",1);
-//		ft_putstr_fd(commands[i],1);
-//		ft_putstr_fd("\n",1);
+		ft_putstr_fd("#",1);
+		ft_putstr_fd(commands[i],1);
+		ft_putstr_fd("#\n",1);
 		free(tmp);
 		i++;
 	}
@@ -127,20 +109,29 @@ char	**ft_split_input(t_data *data, char *input)
 	return (commands);
 }
 
-int		ft_is_builtin(char *cmd)
+int		ft_is_builtin(char *cmd, t_data *data)
 {
 	int		i;
 	char	**split_cmd;
 
 	i = 0;
-	split_cmd = ft_split(cmd, ' ');
+	if (data->is_q == 0)
+		split_cmd = ft_split(cmd, ' ');
+	else if (data->is_q == 1)
+		split_cmd = ft_split(cmd, '\"');
+//	ft_putstr_fd("$$", 1);
+//	ft_putstr_fd(split_cmd[0], 1);
+//	ft_putstr_fd("$$", 1);
 	char *builtin[] = {"pwd", "cd", "env", "export", "unset", "echo", "exit", NULL};
 	while (builtin[i])
 	{
 		if (ft_strncmp(builtin[i], split_cmd[0], ft_strlen(builtin[i])) == 0)
 		{
 			if ((ft_strlen(builtin[i]) == ft_strlen(split_cmd[0])))
+			{
+				ft_putstr_fd("OK",1);
 				return (1);
+			}
 		}
 		i++;
 	}
