@@ -4,7 +4,7 @@ int		main(void)
 {
 	int i = 0;
 	char **new = NULL;
-	char *str = "\"sss\" \" ee\"-la\"   \"funk\" \"";
+	char *str = "\"ls\" \" ee\"-la   \"funk\"";
 
 	new = ft_split_refill(str, '\"');
 	while (new[i])

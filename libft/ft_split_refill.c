@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:59:36 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/24 17:16:38 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/09/24 17:59:43 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,32 @@ static char		**ft_add_2(char const *s, char c, char **tab)
 	size_t		i;
 	size_t		start;
 	size_t		index;
+	int			count;
 
 	index = 0;
 	i = 0;
+	count = 0;
 	while (s[i])
 	{
 		if (s[i] == c)
+		{
 			i++;
+			count++;
+		}
 		else if (s[i] != c)
 		{
-			start = i;
+			if (count % 2 == 1)
+			{
+				start = i - 1;
+			}
+			else
+				start = i;
 			while (s[i] && s[i] != c)
 				i++;
-			tab[index] = ft_substr(s, start, i - start);
+			if (count % 2 == 1)
+				tab[index] = ft_substr(s, start, i - start + 1);
+			else
+				tab[index] = ft_substr(s, start, i - start);
 			index++;
 			tab[index] = NULL;
 		}
@@ -119,10 +132,13 @@ char			**ft_remove_empty(char **tab)
 	return (tab);
 }
 
+
 char			**ft_split_refill(char const *s, char c)
 {
 	char	**tab;
+	char	*tmp;
 
+	tmp = ft_strdup(s);
 	if (s == NULL)
 		return (NULL);
 	if (!(tab = (char**)malloc(sizeof(char*) * (ft_nb_words_2(s, c) + 1))))
