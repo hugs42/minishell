@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:03:10 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/24 19:53:49 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/11/18 10:59:33 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int		ft_execute(t_data *data, char **cmd, char **split_arg, int i)
 			ft_exec_builtin(data, cmd[i]);
 		else if (ft_get_absolute_path(data, cmd) == 1)
 		{
-			ft_putstr_fd("OKK", 1);
 //			cmd[0] = data->bin;
 //			ft_putstr_fd("||", 1);
 //			ft_putstr_fd(cmd[1], 1);

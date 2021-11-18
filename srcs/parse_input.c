@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 08:48:31 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/23 10:21:08 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/11/18 11:14:31 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ int		ft_check_quotes(t_data *data, char *input)
 		}
 		i++;
 	}
-//	ft_putstr_fd("|",1);
-//	ft_putnbr_fd(q, 1);
-//	ft_putstr_fd("|",1);
 	if (q % 2 == 1)
 	{
 		ft_putstr_fd("minishell: unexpected EOF while looking for matching quotes\n", 2);
@@ -99,9 +96,9 @@ char	**ft_split_input(t_data *data, char *input)
 		tmp = ft_strtrim(commands[i], "+");
 		free(commands[i]);
 		commands[i] = ft_strdup(tmp);
-		ft_putstr_fd("#",1);
-		ft_putstr_fd(commands[i],1);
-		ft_putstr_fd("#\n",1);
+//		ft_putstr_fd("#",1);
+//		ft_putstr_fd(commands[i],1);
+//		ft_putstr_fd("#\n",1);
 		free(tmp);
 		i++;
 	}
@@ -138,20 +135,17 @@ int		ft_is_builtin(char *cmd, t_data *data)
 	return (0);
 }
 
-int		ft_parse_input(char *input)
+int		ft_parse_input(t_data *data, char **cmd, char *argv)
 {
 	int		i;
 	char	**commands;
 
 	i = 0;
-	while (input[i] != '\0')
-	{
-		if (ft_isspace(input[i]))
-			i++;
-		else
-			commands = ft_split(input, ';');
-		i++;
-	}
-//	printf("|%s|", *commands);
+	if (cmd == NULL)
+		ft_shell_loop(data, argv);
+	if (cmd[0] != NULL && data->input != 0)
+		cmd[0] = ft_lowercase(cmd[0]);
+	else if (cmd[0] == NULL)
+		cmd[0] = "\0";
 	return (0);
 }
