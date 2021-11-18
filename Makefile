@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 15:37:01 by hugsbord          #+#    #+#              #
-#    Updated: 2021/11/18 11:12:54 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/11/18 11:32:02 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ SRCS =	./srcs/main.c \
 		./srcs/shell_loop.c \
 		./srcs/error.c \
 		./srcs/parse_input.c \
+		./srcs/pipe.c \
+		./srcs/redir.c \
 		./srcs/get_absolute_path.c \
 		./srcs/env_var.c \
 		./srcs/execute.c \

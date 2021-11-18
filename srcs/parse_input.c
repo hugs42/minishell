@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 08:48:31 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/11/18 11:14:31 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/11/18 11:33:50 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,6 @@ int		ft_is_builtin(char *cmd, t_data *data)
 		split_cmd = ft_split(cmd, ' ');
 	else if (data->is_q == 1)
 		split_cmd = ft_split(cmd, '\"');
-//	ft_putstr_fd("$$", 1);
-//	ft_putstr_fd(split_cmd[0], 1);
-//	ft_putstr_fd("$$", 1);
 	char *builtin[] = {"pwd", "cd", "env", "export", "unset", "echo", "exit", NULL};
 	while (builtin[i])
 	{
@@ -137,15 +134,36 @@ int		ft_is_builtin(char *cmd, t_data *data)
 
 int		ft_parse_input(t_data *data, char **cmd, char *argv)
 {
-	int		i;
+	int	i;
+	int	j;
 	char	**commands;
 
 	i = 0;
+	j = 0;
 	if (cmd == NULL)
 		ft_shell_loop(data, argv);
 	if (cmd[0] != NULL && data->input != 0)
 		cmd[0] = ft_lowercase(cmd[0]);
 	else if (cmd[0] == NULL)
 		cmd[0] = "\0";
+	while (cmd[i])
+	{
+		ft_putstr_fd(cmd[i], 1);
+		ft_putstr_fd("<<\n", 1);
+		j = 0;
+		while (cmd[i][j])
+		{
+			if (cmd[i][j] == '|')
+			{
+				ft_putstr_fd("handle pipe\n", 1);
+			}
+			else if (cmd[i][j] == '<' || cmd[i][j] == '>')
+			{
+				ft_putstr_fd("redir\n", 1);
+			}
+			j++;
+		}
+		i++;
+	}
 	return (0);
 }
