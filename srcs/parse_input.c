@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 08:48:31 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/11/18 11:33:50 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/11/23 13:06:11 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,13 @@ char	**ft_split_input(t_data *data, char *input)
 	if (ft_check_quotes(data, input) == -1)
 		return (NULL);
 //	commands = ft_split(input, ';');
-	ft_strtrim(commands[i], ";");
+//	ft_strtrim(commands[i], ";");
 	i = 0;
 	while (commands[i] != NULL)
 	{
+//		ft_putstr_fd(">>>", 1);
+//		ft_putstr_fd(commands[i], 1);
+//		ft_putstr_fd("\n", 1);
 //		tmp = ft_strtrim(commands[i], "\"");
 		tmp = ft_strtrim(commands[i], "+");
 		free(commands[i]);
@@ -132,6 +135,80 @@ int		ft_is_builtin(char *cmd, t_data *data)
 	return (0);
 }
 
+int		ft_is_token(char c)
+{
+	if (c == '"' || c == '\\')
+		return (1);
+	return (0);
+}
+
+int		ft_strlen_arg_token(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+	{
+		if (str[i] == '\\' && ft_is_token(str[i + 1]))
+			i++;
+		i++;
+	}
+	return (i);
+}
+
+static int	ft_strlen_arg(char *str)
+{
+	int i;
+
+	i = 0;
+	if (str[i] == '<' || str[i] == '>' || str[i] == '=' || str[i] == '|')
+	{
+		if (str[i] == '>' && str[i + 1] == '>')
+			i += 2;
+		else
+			i += 1;
+	}
+	else
+	{
+		while (str[i] && !ft_isspace(str[i]) && str[i] != '<' &&
+		str[i] != '>' && str[i] != '=' && str[i] != '|')
+		{
+			if (str[i] == '\'' || str[i] == '"')
+			{
+				i++;
+				i += ft_strlen_arg_token(str + i, str[i - 1]);
+				if (!(str[i]))
+					return (i);
+			}
+			i++;
+		}
+		if (str[i] == '=')
+			i++;
+	}
+	return (i);
+}
+
+int	ft_count_args(char *str)
+{
+	int	i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	while (str[i])
+	{
+		while (ft_isspace(str[i]))
+			i++;
+		count++;
+		i += ft_strlen_arg(str);
+		while (ft_isspace(str[i]))
+			i++;
+	}
+	return (count);
+}
+
 int		ft_parse_input(t_data *data, char **cmd, char *argv)
 {
 	int	i;
@@ -140,30 +217,38 @@ int		ft_parse_input(t_data *data, char **cmd, char *argv)
 
 	i = 0;
 	j = 0;
+	int cc = 0;
+//	cmd = ft_split(data->input, '\n');
 	if (cmd == NULL)
 		ft_shell_loop(data, argv);
 	if (cmd[0] != NULL && data->input != 0)
 		cmd[0] = ft_lowercase(cmd[0]);
 	else if (cmd[0] == NULL)
 		cmd[0] = "\0";
+//	ft_putstr_fd(cmd[0], 1);
+//	ft_putstr_fd("<<\n", 1);
 	while (cmd[i])
 	{
-		ft_putstr_fd(cmd[i], 1);
-		ft_putstr_fd("<<\n", 1);
+		cc = 0;
 		j = 0;
+		cc = ft_count_args(cmd[i]);
+		ft_putstr_fd("->->->", 1);
+		ft_putnbr_fd(cc, 1);
+		ft_putstr_fd("\n", 1);
 		while (cmd[i][j])
 		{
 			if (cmd[i][j] == '|')
 			{
-				ft_putstr_fd("handle pipe\n", 1);
+//				cmd = ft_split(cmd[i], '|');
 			}
 			else if (cmd[i][j] == '<' || cmd[i][j] == '>')
 			{
-				ft_putstr_fd("redir\n", 1);
+				
 			}
 			j++;
 		}
 		i++;
 	}
+//	ft_insert_elem(data, cmd);
 	return (0);
 }

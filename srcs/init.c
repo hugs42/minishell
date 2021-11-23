@@ -6,11 +6,34 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 10:24:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/22 23:00:31 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/11/19 10:42:30 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
+
+t_cmd	*ft_init_cmd()
+{
+	t_cmd	*cmd;
+
+	cmd = ft_calloc(1, sizeof(t_cmd));
+	cmd->first = NULL;
+	return (cmd);
+}
+
+t_cmd_e		*ft_init_cmd_elem(t_cmd *cmd)
+{
+	t_cmd_e	*new;
+
+	new = ft_calloc(1, sizeof(t_cmd_e));
+	new->cmd = NULL;
+	new->pipe = 0;
+	new->redir = 0;
+	new->quotes = 0;
+	new->dquotes = 0;
+	new->ret = 0;
+	return (new);
+}
 
 int		ft_init_struct_pwd(t_data *data)
 {
@@ -23,6 +46,7 @@ int		ft_init_struct_pwd(t_data *data)
 int		ft_init_struct(t_data *data)
 {
 	ft_init_struct_pwd(data);
+	data->cmd_list = NULL;
 	data->i = 0;
 	data->is_file = 0;
 	data->echo_n = 0;
@@ -38,6 +62,7 @@ int		ft_init_struct(t_data *data)
 	data->start = 0;
 	data->end = 0;
 	data->cmd = NULL;
+	data->args = NULL;
 	return (SUCCESS);
 }
 

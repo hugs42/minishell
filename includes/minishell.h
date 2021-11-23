@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:46:46 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/11/18 11:09:19 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/11/19 10:42:04 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,34 @@
 
 int			g_sig;
 
+typedef struct s_cmd_e	t_cmd_e;
+
 typedef struct		s_pwd
 {
 	char			*pwd;
 	char			*old_pwd;
 }					t_pwd;
 
+typedef struct		s_cmd
+{
+	t_cmd_e			*first;
+}					t_cmd;
+
+struct				s_cmd_e
+{
+	char			*cmd;
+	int				pipe;
+	int				redir;
+	int				quotes;
+	int				dquotes;
+	int				ret;
+	t_cmd_e			*next;
+};
+
 typedef struct		s_data
 {
 	t_pwd			*pwd;
+	t_cmd			*cmd_list;
 	int				i;
 	int				is_file;
 	int				echo_n;
@@ -62,6 +81,7 @@ typedef struct		s_data
 	char			*path;
 	char			**path_split;
 	char			**cmd;
+	char			**args;
 	char			*bin;
 	int				is_q;
 	int				quote;
@@ -69,16 +89,6 @@ typedef struct		s_data
 	int				start;
 	int				end;
 }					t_data;
-
-typedef struct s_token
-{
-	int				type;
-	size_t			start;
-	size_t			end;
-	char			*str;
-	struct s_token	*next;
-}	t_token;
-
 
 char				**g_env;
 
@@ -100,6 +110,8 @@ int		ft_exec_cmds(t_data *data, char **cmd);
 void	ft_free_array(char **array);
 int		ft_init_env(char **envp);
 int		ft_init_struct(t_data *data);
+t_cmd	*ft_init_cmd(void);
+t_cmd_e	*ft_init_cmd_elem(t_cmd *cmd);
 int		ft_builtin_env(void);
 int		ft_find_var(char *var);
 void	ft_update_var(char *key, char *value);
@@ -115,5 +127,5 @@ void	rl_replace_line(const char *s, int n);
 void	rl_clear_history(void);
 char	*ft_lowercase(char *cmd);
 int		ft_check_q_spaces(t_data *data, char **cmd);
-int		ft_lexer(t_data *data, char **cmd);
+t_cmd_e		*ft_insert_elem(t_data *data, char **cmd);
 #endif

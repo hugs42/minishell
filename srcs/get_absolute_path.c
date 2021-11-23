@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 09:53:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/09/25 15:43:57 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/11/18 12:59:52 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,13 +195,13 @@ int		ft_get_absolute_path(t_data *data, char **cmd)
 		free(data->path);
 		data->path = NULL;
 	}
-	while (data->cmd[j])
-	{
-		ft_putstr_fd(">>",1);
-		ft_putstr_fd(data->cmd[j], 1);
-		ft_putstr_fd("\n",1);
-		j++;
-	}
+//	while (data->cmd[j])
+//	{
+//		ft_putstr_fd(">>",1);
+//		ft_putstr_fd(data->cmd[j], 1);
+//		ft_putstr_fd("\n",1);
+//		j++;
+//	}
 //	ft_putstr_fd("$$", 1);
 //	ft_putstr_fd(cmd[0], 1);
 	if (data->is_file == 1)
